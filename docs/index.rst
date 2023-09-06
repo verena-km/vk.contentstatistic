@@ -1,0 +1,5 @@
+===================
+vk.contentstatistic
+===================
+
+User documentation
