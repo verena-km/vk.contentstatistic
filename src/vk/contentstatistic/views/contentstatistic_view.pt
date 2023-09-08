@@ -12,7 +12,7 @@
 
   <h2> Statistic for Content Types and workflow states</h2>
 
-
+<!--
  <table>
   <tr>
     <th>Type</th>
@@ -36,7 +36,31 @@
     </td>
     <td tal:content="python:view.number_of_contents()"> peng
     </td>
-</table>
+</table> -->
+
+
+
+  <table tal:define="table python:view.number_per_contenttype_and_state();
+                     rows python:table[0];
+                     columns python:table[1];
+                     dict python:table[2];
+                     description python:table[3]">
+  <tr>
+    <th tal:content="description">??</th>
+    <th tal:repeat="column columns"
+        tal:content="column">
+        column name
+    </th>
+  </tr>
+
+  <tr tal:repeat="row rows">
+    <td tal:content="row">row name</td>
+    <td tal:repeat="column columns"
+        tal:content="python:dict[row][column]">field content
+    </td>
+  </tr>
+
+  </table>
 
   <h2> Statistic for Content Types and workflows</h2>
 
@@ -68,9 +92,10 @@
   <table tal:define="table python:view.number_per_contenttype_and_workflow();
                      rows python:table[0];
                      columns python:table[1];
-                     dict python:table[2]">
+                     dict python:table[2];
+                     description python:table[3]">
   <tr>
-    <th>??</th>
+    <th tal:content="description">??</th>
     <th tal:repeat="column columns"
         tal:content="column">
         column name
@@ -89,26 +114,6 @@
 
   <h2> Statistic for File types </h2>
 
-  <table tal:define="table python:view.table();
-                     rows python:table[0];
-                     columns python:table[1];
-                     dict python:table[2]">
-  <tr>
-    <th>??</th>
-    <th tal:repeat="column columns"
-        tal:content="column">
-        column name
-    </th>
-  </tr>
-
-  <tr tal:repeat="row rows">
-    <td tal:content="row">row name</td>
-    <td tal:repeat="column columns"
-        tal:content="python:dict[row][column]">field content
-    </td>
-  </tr>
-
-  </table>
 
 
   <h2> Statistic for content size </h2>
