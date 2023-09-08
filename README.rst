@@ -2,29 +2,6 @@
    If you want to learn more about writing documentation, please check out: http://docs.plone.org/about/documentation_styleguide.html
    This text does not appear on PyPI or github. It is a comment.
 
-.. image:: https://github.com/collective/vk.contentstatistic/actions/workflows/plone-package.yml/badge.svg
-    :target: https://github.com/collective/vk.contentstatistic/actions/workflows/plone-package.yml
-
-.. image:: https://coveralls.io/repos/github/collective/vk.contentstatistic/badge.svg?branch=main
-    :target: https://coveralls.io/github/collective/vk.contentstatistic?branch=main
-    :alt: Coveralls
-
-.. image:: https://codecov.io/gh/collective/vk.contentstatistic/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/collective/vk.contentstatistic
-
-.. image:: https://img.shields.io/pypi/v/vk.contentstatistic.svg
-    :target: https://pypi.python.org/pypi/vk.contentstatistic/
-    :alt: Latest Version
-
-.. image:: https://img.shields.io/pypi/status/vk.contentstatistic.svg
-    :target: https://pypi.python.org/pypi/vk.contentstatistic
-    :alt: Egg Status
-
-.. image:: https://img.shields.io/pypi/pyversions/vk.contentstatistic.svg?style=plastic   :alt: Supported - Python Versions
-
-.. image:: https://img.shields.io/pypi/l/vk.contentstatistic.svg
-    :target: https://pypi.python.org/pypi/vk.contentstatistic/
-    :alt: License
 
 
 ===================
@@ -36,33 +13,29 @@ An Plone addon showing content statistics
 Features
 --------
 
-- Can be bullet points
+- Statistic for Content Types and workflow states
+- Statistic for Content Types and workflows
+- Statistic for File types
+- Statistic for content size
+- 10 Biggest Files
 
-
-Examples
+Usage
 --------
 
-This add-on can be seen in action at the following sites:
-- Is there a page on the internet where everybody can see the features?
-
-
-Documentation
--------------
-
-Full documentation for end users can be found in the "docs" folder, and is also available online at http://docs.plone.org/foo/bar
+Call the view  @@contentstatistic
 
 
 Translations
 ------------
 
-This product has been translated into
-
-- Klingon (thanks, K'Plai)
+TODO
 
 
 Installation
 ------------
 
+not yet released
+(((
 Install vk.contentstatistic by adding it to your buildout::
 
     [buildout]
@@ -74,7 +47,7 @@ Install vk.contentstatistic by adding it to your buildout::
 
 
 and then running ``bin/buildout``
-
+)))
 
 Authors
 -------
@@ -93,9 +66,8 @@ Put your name here, you deserve it!
 Contribute
 ----------
 
-- Issue Tracker: https://github.com/collective/vk.contentstatistic/issues
-- Source Code: https://github.com/collective/vk.contentstatistic
-- Documentation: https://docs.plone.org/foo/bar
+- Issue Tracker: https://github.com/verena-km/vk.contentstatistic/issues
+- Source Code: https://github.com/verena-km/vk.contentstatistic
 
 
 Support

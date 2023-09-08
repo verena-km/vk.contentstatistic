@@ -7,6 +7,9 @@ from zope.interface import Interface
 from plone import api
 from Missing import Missing
 
+
+# TODO get ideas from https://github.com/4teamwork/ftw.contentstats
+
 class IContentstatisticView(Interface):
     """Marker Interface for IContentstatisticView"""
 
