@@ -23,7 +23,7 @@ class ViewsIntegrationTest(unittest.TestCase):
 
     def test_content_statistic_is_registered(self):
         view = getMultiAdapter(
-            (self.portal["other-folder"], self.portal.REQUEST), name="content-statistic"
+            (self.portal["other-folder"], self.portal.REQUEST), name="contentstatistic"
         )
         self.assertTrue(IContentstatisticView.providedBy(view))
 
@@ -32,7 +32,7 @@ class ViewsIntegrationTest(unittest.TestCase):
         try:
             view = getMultiAdapter(
                 (self.portal["front-page"], self.portal.REQUEST),
-                name="content-statistic",
+                name="contentstatistic",
             )
         except ComponentLookupError:
             view_found = False

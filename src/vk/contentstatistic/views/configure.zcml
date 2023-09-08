@@ -7,7 +7,7 @@
  <!-- -*- extra stuff goes here -*- -->
 
   <browser:page
-    name="content-statistic"
+    name="contentstatistic"
     for="*"
     class=".contentstatistic_view.ContentstatisticView"
     template="contentstatistic_view.pt"

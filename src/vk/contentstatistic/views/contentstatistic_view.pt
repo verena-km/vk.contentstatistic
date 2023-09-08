@@ -6,30 +6,125 @@
       metal:use-macro="context/main_template/macros/master">
 <body>
 
-  <metal:custom_title fill-slot="content-title">
-    <h1 tal:replace="structure context/@@title" />
+  <metal:block fill-slot="main">
 
-    <!-- @@title view template: -->
-    <!--
-    <h1 tal:define="title context/Title" tal:condition="title" tal:content="title">
-      Title or id
-    </h1>
-    -->
+  <h1> Site statistics </h1>
 
-  </metal:custom_title>
+  <h2> Statistic for Content Types and workflow states</h2>
 
-  <metal:custom_description fill-slot="content-description">
-    <p tal:replace="structure context/@@description" />
-  </metal:custom_description>
 
-  <metal:content-core fill-slot="content-core">
-  <metal:block define-macro="content-core">
+ <table>
+  <tr>
+    <th>Type</th>
+    <th tal:repeat="state python:view.workflow_states()"
+        tal:content="state">
+    </th>
+    <th>Sum</th>
+  </tr>
+  <tr tal:repeat="type python:view.content_types()">
+    <td tal:content="type">Document</td>
+    <td tal:repeat="state python:view.workflow_states()"
+        tal:content="python:view.number_per_contenttype_and_state()[type][state]">
+    </td>
+    <td tal:content="python:view.number_per_contenttype()[type]">
+    </td>
+  </tr>
+  <tr>
+    <td> Sum </td>
+    <td tal:repeat="state python:view.workflow_states()"
+        tal:content="python:view.number_per_workflow()[state]">
+    </td>
+    <td tal:content="python:view.number_of_contents()"> peng
+    </td>
+</table>
 
-    <h2>Main content</h2>
-    <!--<div tal:replace="view/my_custom_view_method" />-->
-    <!--<div tal:replace="context/my_custom_field" />-->
+  <h2> Statistic for Content Types and workflows</h2>
+
+<!--  <table>
+  <tr>
+    <th>Type</th>
+    <th tal:repeat="workflow python:view.workflows()"
+        tal:content="workflow">
+    </th>
+    <th>Sum</th>
+  </tr>
+  <tr tal:repeat="type python:view.content_types()">
+    <td tal:content="type">Document</td>
+    <td tal:repeat="workflow python:view.workflows()"
+        tal:content="python:view.number_per_contenttype_and_workflow()[type][workflow]">
+    </td>
+    <td tal:content="python:view.number_per_contenttype()[type]">
+    </td>
+  </tr>
+  <tr>
+    <td> Sum </td>
+    <td tal:repeat="state python:view.workflow_states()"
+        tal:content="python:view.number_per_workflow()[state]">
+    </td>
+    <td tal:content="python:view.number_of_contents()"> peng
+    </td>
+</table> -->
+
+  <table tal:define="table python:view.number_per_contenttype_and_workflow();
+                     rows python:table[0];
+                     columns python:table[1];
+                     dict python:table[2]">
+  <tr>
+    <th>??</th>
+    <th tal:repeat="column columns"
+        tal:content="column">
+        column name
+    </th>
+  </tr>
+
+  <tr tal:repeat="row rows">
+    <td tal:content="row">row name</td>
+    <td tal:repeat="column columns"
+        tal:content="python:dict[row][column]">field content
+    </td>
+  </tr>
+
+  </table>
+
+
+  <h2> Statistic for File types </h2>
+
+  <table tal:define="table python:view.table();
+                     rows python:table[0];
+                     columns python:table[1];
+                     dict python:table[2]">
+  <tr>
+    <th>??</th>
+    <th tal:repeat="column columns"
+        tal:content="column">
+        column name
+    </th>
+  </tr>
+
+  <tr tal:repeat="row rows">
+    <td tal:content="row">row name</td>
+    <td tal:repeat="column columns"
+        tal:content="python:dict[row][column]">field content
+    </td>
+  </tr>
+
+  </table>
+
+
+  <h2> Statistic for content size </h2>
+
+
+  <table>
+
+  </table>
+
+
+
+
+
+  <h2> Statistic for used </h2>
 
   </metal:block>
-  </metal:content-core>
+
 </body>
 </html>
