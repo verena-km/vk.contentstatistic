@@ -55,7 +55,7 @@
 
   <tr tal:repeat="row rows">
     <td tal:content="row">row name</td>
-    <td tal:repeat="column columns"
+    <td align=right tal:repeat="column columns"
         tal:content="python:dict[row][column]">field content
     </td>
   </tr>
@@ -104,7 +104,8 @@
 
   <tr tal:repeat="row rows">
     <td tal:content="row">row name</td>
-    <td tal:repeat="column columns"
+    <td align=right
+        tal:repeat="column columns"
         tal:content="python:dict[row][column]">field content
     </td>
   </tr>
@@ -114,22 +115,67 @@
 
   <h2> Statistic for File types </h2>
 
+<table tal:define="table python:view.number_per_filetype();
+                     rows python:table[0];
+                     columns python:table[1];
+                     dict python:table[2];
+                     description python:table[3]">
+
+  <tr>
+    <th tal:content="description">??</th>
+    <th tal:repeat="column columns"
+        tal:content="column">
+        column name
+    </th>
+  </tr>
+
+  <tr tal:repeat="row rows">
+    <td tal:content="row">row name</td>
+    <td align=right tal:content="python:dict[row]">number </td>
+  </tr>
+
+</table>
 
 
   <h2> Statistic for content size </h2>
 
+<table tal:define="table python:view.get_file_sizes();
+                     rows python:table[0];
+                     columns python:table[1];
+                     dict python:table[2];
+                     description python:table[3]">
 
-  <table>
+  <tr>
+    <th tal:content="description">??</th>
+    <th tal:repeat="column columns"
+        tal:content="column">
+        column name
+    </th>
+  </tr>
 
-  </table>
+  <tr tal:repeat="row rows">
+    <td tal:content="row">row name</td>
+    <td align=right tal:content="python:dict[row]">number </td>
+  </tr>
+
+</table>
+
+  <h2> Biggest Files </h2>
 
 
 
 
+<div tal:define="dict python:view.get_biggest_files();
+                  files python:dict.keys()"
+tal:repeat="file files">
 
-  <h2> Statistic for used </h2>
+<a tal:attributes="href string:${file/absolute_url}" tal:content="file/Title" />
+<span tal:content="python:dict[file]">1000</span> KB
 
-  </metal:block>
+</div>
+
+
+ </metal:block>
 
 </body>
 </html>

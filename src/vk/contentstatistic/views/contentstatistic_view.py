@@ -18,6 +18,9 @@ class ContentstatisticView(BrowserView):
     # template = ViewPageTemplateFile('contentstatistic_view.pt')
 
     def __call__(self):
+        self.portal_workflow = api.portal.get_tool('portal_workflow')
+        self.portal_catalog = api.portal.get_tool('portal_catalog')
+        self.get_biggest_files()
         return self.index()
 
     def content_types(self):
@@ -96,8 +99,6 @@ class ContentstatisticView(BrowserView):
 
 
     def number_per_contenttype_and_workflow(self):
-        portal_workflow = api.portal.get_tool('portal_workflow')
-        portal_catalog = api.portal.get_tool('portal_catalog')
         columns = self.workflow_ids()+ ("(no workflow)","sum",) # tuple
         rows = self.content_types() + ["sum"] # list
         dict = self.create_zero_dict(columns, rows)
@@ -107,17 +108,95 @@ class ContentstatisticView(BrowserView):
             query = {
                 'portal_type': content_type,
             }
-            results = portal_catalog(query)
+            results = self.portal_catalog(query)
 
             for result in results:
                 obj = result.getObject()
-                chain = portal_workflow.getChainFor(obj)
+                chain = self.portal_workflow.getChainFor(obj)
                 # hat das Objekt überhaupt einen Workflow
                 if len(chain) != 0:
-                    workflow = portal_workflow.getChainFor(obj)[0]
+                    workflow = self.portal_workflow.getChainFor(obj)[0]
                     dict[content_type][workflow] = dict[content_type][workflow] + 1
                 else:
                     dict[content_type]["(no workflow)"] = dict[content_type]["(no workflow)"]+1
         self.fill_sums(dict)
         return rows, columns, dict, "Content Type \ Workflow"
 
+    def number_per_filetype(self):
+
+        query = {
+            'portal_type': "File",
+        }
+        results = self.portal_catalog(query)
+        dict = {}
+        for result in results:
+            obj = result.getObject()
+            file_type = obj.file.contentType
+            if file_type in dict.keys():
+                dict[file_type] += 1
+            else:
+                dict[file_type] = 1
+
+        dict['sum'] = len(results)
+        print(dict)
+
+        columns = ["sum"]
+        rows = list(dict.keys())
+
+        return rows, columns, dict, "File Type"
+
+
+    def get_file_sizes(self):
+
+        query = {
+            'portal_type': "File",
+        }
+        results = self.portal_catalog(query)
+        dict = {}
+        total_size = 0
+        for result in results:
+            obj = result.getObject()
+            file_type = obj.file.contentType
+            file_size = (int)(obj.file.size/1024)
+            total_size = total_size + file_size
+            if file_type in dict.keys():
+                dict[file_type] += file_size
+            else:
+                dict[file_type] = file_size
+
+        dict['sum'] = total_size
+
+        columns = ["KB"]
+        rows = list(dict.keys())
+
+        return rows, columns, dict, "File Sizes"
+
+    def get_biggest_files(self):
+
+        query = {
+            'portal_type': "File",
+        }
+        results = self.portal_catalog(query)
+
+        dict = {}
+
+        total_size = 0
+        for result in results:
+            obj = result.getObject()
+            file_type = obj.file.contentType
+            file_size = (int)(obj.file.size/1024)
+            dict[obj] = file_size
+
+
+        # Die 10 Schlüssel mit den höchsten Werten ermitteln
+        sorted_keys = sorted(dict, key=lambda x: dict[x], reverse=True)[:10]
+
+        # Die gefundenen Schlüssel ausgeben
+        for key in sorted_keys:
+            print(key, dict[key])
+
+        result_dict ={}
+        for key in sorted_keys:
+            result_dict[key] = dict[key]
+
+        return result_dict
