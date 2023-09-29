@@ -45,13 +45,13 @@ class ContentstatisticView(BrowserView):
             workflow = portal_workflow.getWorkflowById(workflow_id)
             if workflow is not None:
                 states = workflow.states.objectIds()
-                all_states = list(set(all_states)| set(states))
+                all_states = list(set(all_states) | set(states))
         return all_states
 
     def number_per_contenttype_and_state(self):
         portal_catalog = api.portal.get_tool('portal_catalog')
-        columns = self.workflow_states()+ ["(no state)","sum",] # list
-        rows = self.content_types() + ["sum"] # list
+        columns = self.workflow_states() + ["(no state)", "sum",]  # list
+        rows = self.content_types() + ["sum"]  # list
         dict = self.create_zero_dict(columns, rows)
 
         for content_type in self.content_types():
@@ -62,7 +62,7 @@ class ContentstatisticView(BrowserView):
                 }
                 state_results = portal_catalog(query)
                 dict[content_type][state] = len(state_results)
-                #print(dict)
+                # print(dict)
 
             # count elements without review state
             query = {
@@ -70,26 +70,27 @@ class ContentstatisticView(BrowserView):
             }
             results = portal_catalog(query)
             for result in results:
-                if isinstance(result.review_state,Missing):
+                if isinstance(result.review_state, Missing):
                     dict[content_type]["(no state)"] += 1
 
         self.fill_sums(dict)
         return rows, columns, dict, "Content Type \ Workflow State"
 
-
-    def fill_sums(self,dict):
+    def fill_sums(self, dict):
         # Zeilensummen
         for row_key in dict.keys():
             dict[row_key]["sum"] = 0
             for column_key in dict[row_key].keys():
                 if column_key != "sum":
-                    dict[row_key]["sum"] = dict[row_key]["sum"] + dict[row_key][column_key]
+                    dict[row_key]["sum"] = dict[row_key]["sum"] + \
+                        dict[row_key][column_key]
         # Spaltensummen
-        column_keys = dict["sum"].keys() # zeile sum gibt es immer
+        column_keys = dict["sum"].keys()  # zeile sum gibt es immer
         for column_key in column_keys:
             for row_key in dict.keys():
                 if row_key != "sum":
-                    dict["sum"][column_key] = dict["sum"][column_key] + dict[row_key][column_key]
+                    dict["sum"][column_key] = dict["sum"][column_key] + \
+                        dict[row_key][column_key]
 
     def create_zero_dict(self, columns, rows):
         dict = {}
@@ -97,13 +98,12 @@ class ContentstatisticView(BrowserView):
             row_dict = {}
             for column in columns:
                 row_dict[column] = 0
-            dict[row]= row_dict
+            dict[row] = row_dict
         return dict
 
-
     def number_per_contenttype_and_workflow(self):
-        columns = self.workflow_ids()+ ("(no workflow)","sum",) # tuple
-        rows = self.content_types() + ["sum"] # list
+        columns = self.workflow_ids() + ("(no workflow)", "sum",)  # tuple
+        rows = self.content_types() + ["sum"]  # list
         dict = self.create_zero_dict(columns, rows)
 
         for content_type in self.content_types():
@@ -148,7 +148,6 @@ class ContentstatisticView(BrowserView):
 
         return rows, columns, dict, "File Type"
 
-
     def get_file_sizes(self):
 
         query = {
@@ -190,7 +189,6 @@ class ContentstatisticView(BrowserView):
             file_size = (int)(obj.file.size/1024)
             dict[obj] = file_size
 
-
         # Die 10 Schlüssel mit den höchsten Werten ermitteln
         sorted_keys = sorted(dict, key=lambda x: dict[x], reverse=True)[:10]
 
@@ -198,7 +196,7 @@ class ContentstatisticView(BrowserView):
         for key in sorted_keys:
             print(key, dict[key])
 
-        result_dict ={}
+        result_dict = {}
         for key in sorted_keys:
             result_dict[key] = dict[key]
 

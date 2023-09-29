@@ -1,18 +1,18 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      i18n:domain="vk.contentstatistic"
-      metal:use-macro="context/main_template/macros/master">
-<body>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="vk.contentstatistic"
+  metal:use-macro="context/main_template/macros/master"
+>
+  <body>
+    <metal:block fill-slot="main">
+      <h1>Site statistics</h1>
 
-  <metal:block fill-slot="main">
+      <h2>Statistic for Content Types and workflow states</h2>
 
-  <h1> Site statistics </h1>
-
-  <h2> Statistic for Content Types and workflow states</h2>
-
-<!--
+      <!--
  <table>
   <tr>
     <th>Type</th>
@@ -38,33 +38,33 @@
     </td>
 </table> -->
 
-
-
-  <table tal:define="table python:view.number_per_contenttype_and_state();
+      <table
+        tal:define="table python:view.number_per_contenttype_and_state();
                      rows python:table[0];
                      columns python:table[1];
                      dict python:table[2];
-                     description python:table[3]">
-  <tr>
-    <th tal:content="description">??</th>
-    <th tal:repeat="column columns"
-        tal:content="column">
-        column name
-    </th>
-  </tr>
+                     description python:table[3]"
+      >
+        <tr>
+          <th tal:content="description">??</th>
+          <th tal:repeat="column columns" tal:content="column">column name</th>
+        </tr>
 
-  <tr tal:repeat="row rows">
-    <td tal:content="row">row name</td>
-    <td align=right tal:repeat="column columns"
-        tal:content="python:dict[row][column]">field content
-    </td>
-  </tr>
+        <tr tal:repeat="row rows">
+          <td tal:content="row">row name</td>
+          <td
+            align="right"
+            tal:repeat="column columns"
+            tal:content="python:dict[row][column]"
+          >
+            field content
+          </td>
+        </tr>
+      </table>
 
-  </table>
+      <h2>Statistic for Content Types and workflows</h2>
 
-  <h2> Statistic for Content Types and workflows</h2>
-
-<!--  <table>
+      <!--  <table>
   <tr>
     <th>Type</th>
     <th tal:repeat="workflow python:view.workflows()"
@@ -89,93 +89,83 @@
     </td>
 </table> -->
 
-  <table tal:define="table python:view.number_per_contenttype_and_workflow();
+      <table
+        tal:define="table python:view.number_per_contenttype_and_workflow();
                      rows python:table[0];
                      columns python:table[1];
                      dict python:table[2];
-                     description python:table[3]">
-  <tr>
-    <th tal:content="description">??</th>
-    <th tal:repeat="column columns"
-        tal:content="column">
-        column name
-    </th>
-  </tr>
+                     description python:table[3]"
+      >
+        <tr>
+          <th tal:content="description">??</th>
+          <th tal:repeat="column columns" tal:content="column">column name</th>
+        </tr>
 
-  <tr tal:repeat="row rows">
-    <td tal:content="row">row name</td>
-    <td align=right
-        tal:repeat="column columns"
-        tal:content="python:dict[row][column]">field content
-    </td>
-  </tr>
+        <tr tal:repeat="row rows">
+          <td tal:content="row">row name</td>
+          <td
+            align="right"
+            tal:repeat="column columns"
+            tal:content="python:dict[row][column]"
+          >
+            field content
+          </td>
+        </tr>
+      </table>
 
-  </table>
+      <h2>Statistic for File types</h2>
 
-
-  <h2> Statistic for File types </h2>
-
-<table tal:define="table python:view.number_per_filetype();
+      <table
+        tal:define="table python:view.number_per_filetype();
                      rows python:table[0];
                      columns python:table[1];
                      dict python:table[2];
-                     description python:table[3]">
+                     description python:table[3]"
+      >
+        <tr>
+          <th tal:content="description">??</th>
+          <th tal:repeat="column columns" tal:content="column">column name</th>
+        </tr>
 
-  <tr>
-    <th tal:content="description">??</th>
-    <th tal:repeat="column columns"
-        tal:content="column">
-        column name
-    </th>
-  </tr>
+        <tr tal:repeat="row rows">
+          <td tal:content="row">row name</td>
+          <td align="right" tal:content="python:dict[row]">number</td>
+        </tr>
+      </table>
 
-  <tr tal:repeat="row rows">
-    <td tal:content="row">row name</td>
-    <td align=right tal:content="python:dict[row]">number </td>
-  </tr>
+      <h2>Statistic for content size</h2>
 
-</table>
-
-
-  <h2> Statistic for content size </h2>
-
-<table tal:define="table python:view.get_file_sizes();
+      <table
+        tal:define="table python:view.get_file_sizes();
                      rows python:table[0];
                      columns python:table[1];
                      dict python:table[2];
-                     description python:table[3]">
+                     description python:table[3]"
+      >
+        <tr>
+          <th tal:content="description">??</th>
+          <th tal:repeat="column columns" tal:content="column">column name</th>
+        </tr>
 
-  <tr>
-    <th tal:content="description">??</th>
-    <th tal:repeat="column columns"
-        tal:content="column">
-        column name
-    </th>
-  </tr>
+        <tr tal:repeat="row rows">
+          <td tal:content="row">row name</td>
+          <td align="right" tal:content="python:dict[row]">number</td>
+        </tr>
+      </table>
 
-  <tr tal:repeat="row rows">
-    <td tal:content="row">row name</td>
-    <td align=right tal:content="python:dict[row]">number </td>
-  </tr>
+      <h2>Biggest Files</h2>
 
-</table>
-
-  <h2> Biggest Files </h2>
-
-
-
-
-<div tal:define="dict python:view.get_biggest_files();
+      <div
+        tal:define="dict python:view.get_biggest_files();
                   files python:dict.keys()"
-tal:repeat="file files">
-
-<a tal:attributes="href string:${file/absolute_url}" tal:content="file/Title" />
-<span tal:content="python:dict[file]">1000</span> KB
-
-</div>
-
-
- </metal:block>
-
-</body>
+        tal:repeat="file files"
+      >
+        <a
+          tal:attributes="href string:${file/absolute_url}"
+          tal:content="file/Title"
+        />
+        <span tal:content="python:dict[file]">1000</span> KB
+      </div>
+    </metal:block>
+  </body>
 </html>
